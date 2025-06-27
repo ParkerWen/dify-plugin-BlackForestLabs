@@ -109,7 +109,8 @@ class FluxProCannyTool(Tool):
                     f"Failed to fetch control image from URL: {control_image.url}"
                 )
 
-        preprocessed_image: File = tool_parameters.get("preprocessed_image", None)
+        preprocessed_image: File = tool_parameters.get(
+            "preprocessed_image", None)
         if preprocessed_image is not None:
             response = requests.get(preprocessed_image.url)
             if response.status_code == 200:
@@ -125,6 +126,8 @@ class FluxProCannyTool(Tool):
                 raise Exception(
                     f"Failed to fetch preprocessed image from URL: {preprocessed_image.url}"
                 )
+
+        data = {k: v for k, v in data.items() if v is not None}
         headers = {
             "Accept": self.ACCEPT,
             "x-key": self.runtime.credentials.get("api_key", None),
@@ -142,7 +145,10 @@ class FluxProCannyTool(Tool):
             image_url = self._poll_for_result(id, headers, region)
             yield self.create_image_message(image_url)
         else:
-            error_info = response.json()
+            try:
+                error_info = response.json()
+            except ValueError:
+                error_info = response.text
             raise Exception(
                 f"BFL API Message: {error_info}"
             )

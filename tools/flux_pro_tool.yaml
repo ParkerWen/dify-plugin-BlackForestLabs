@@ -160,7 +160,7 @@ parameters:
     required: false
     label:
       en_US: Interval
-      zh_Hans: 安全容忍度
+      zh_Hans: 间隔
       pt_BR: Interval
     default: 2
     min: 1

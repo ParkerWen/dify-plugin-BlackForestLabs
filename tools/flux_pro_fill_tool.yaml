@@ -28,7 +28,7 @@ parameters:
 
   - name: mask
     type: file
-    required: false
+    required: true
     label:
       en_US: Mask
       zh_Hans: 遮罩

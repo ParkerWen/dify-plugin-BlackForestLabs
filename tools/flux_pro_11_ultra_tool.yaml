@@ -63,7 +63,6 @@ parameters:
       en_US: Aspect Ratio
       zh_Hans: 长宽比
       pt_BR: Aspect Ratio
-    default: 16:9
     human_description:
       en_US: Aspect ratio of the image between 21:9 and 9:21.
       zh_Hans: 图像的长宽比介于 21:9 和 9:21 之间。

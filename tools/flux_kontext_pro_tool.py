@@ -107,6 +107,8 @@ class FluxKontextProTool(Tool):
                 raise Exception(
                     f"Failed to fetch image from URL: {input_image.url}"
                 )
+
+        data = {k: v for k, v in data.items() if v is not None}
         headers = {
             "Accept": self.ACCEPT,
             "x-key": self.runtime.credentials.get("api_key", None),
@@ -124,7 +126,10 @@ class FluxKontextProTool(Tool):
             image_url = self._poll_for_result(id, headers, region)
             yield self.create_image_message(image_url)
         else:
-            error_info = response.json()
+            try:
+                error_info = response.json()
+            except ValueError:
+                error_info = response.text
             raise Exception(
                 f"BFL API Message: {error_info}"
             )
